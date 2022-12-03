@@ -9,7 +9,6 @@
     <h2>H2 Title</h2>  
     <h3>H3 Title</h3>
     <p>Paragraph</p>
-
 {% if app.user %}
     <p> User connecté : {{ app.user.email }}</p>
     <button type="button" class="logButton"><a href="{{ path('app_logout') }}">LogOut</a></button>
