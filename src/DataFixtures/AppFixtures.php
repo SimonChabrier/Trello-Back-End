@@ -48,33 +48,23 @@ class AppFixtures extends Fixture
             $users[] = $user;
 
             $manager->persist($user);
-            //TODO assigner des tasks à chaque user
         };
 
         $columns = [];
         for ($i = 0; $i < 5; $i++) {
             $column = new Column();
-            $column->setColumnName('column' . $i);
+            $column->setColumnName('column ' . $i);
             $column->setColumnNumber($i);
 
             $columns[] = $column;
 
             $manager->persist($column);
-            //TODO assigner des tasks à chaque column
         };
 
-        $tasks = [];
-        $colors = [
-            'card--color--orange',
-            'card--color--blue',
-            'card--color--red',
-            'card--color--default',
-        ];
-        $text_area = [
-            '100',
-            '150',
-            '200',
-        ];
+        //$tasks = [];
+        $colors = [ 'card--color--orange', 'card--color--blue', 'card--color--red', 'card--color--default'];
+        $text_area = [ '100', '150', '200'];
+
         for ($i = 0; $i < 30; $i++) {
             $task = new Task();
             $task->setTaskTitle($faker->sentence(3));
@@ -83,11 +73,14 @@ class AppFixtures extends Fixture
             $task->setCardNumber('1');
             $task->setCardColor($colors[mt_rand(0, 3)]);
             $task->setTextareaHeight($text_area[mt_rand(0, 2)]);
-            $task->setTaskDone(rand(0, 1));
-            $task->addUser($users[mt_rand(0, 9)]);
+            $taskStatus = ['false', 'true'];
+            $task->setTaskDone(array_rand($taskStatus , 1));
+            for ($j = 0; $j < 3; $j++) {
+                $task->addUser($users[mt_rand(0, 9)]);
+            }
             $task->setTaskColumn($columns[mt_rand(0, 4)]);
 
-            $tasks[] = $task;
+            //$tasks[] = $task;
 
             $manager->persist($task);
         };

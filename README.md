@@ -18,6 +18,7 @@ Use it to start a project with a skeleton project.
 - Assets
 - Twig Bundle
 - Nelmio Cors Bundle
+- Symfony Serializer Pack
 
 ## Available feature
 
