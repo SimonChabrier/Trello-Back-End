@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+        <!-- Personalize meta tags as you need -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content="Symfony 5 Skeleton App ready to go with User all must have features"/>
+        <meta name="author" content="Simon Chabrier" />
+        <meta name="copyright" content="Simon Chabrier" />
+        <meta property="MyDevTools" content="Symfony Skeleton starter pack with full user functionnality" />
+
+         <!-- Add this App favicon -->
+        <link rel="shortcut icon" href="{{ asset('assets/favicon.png') }}" type="image/x-icon">
+
+        <!-- LinkedIn recommends an aspect ratio between 3:1 and 2:3 you can use 1200 x 627 for link sharing
+              use the tool : https://www.linkedin.com/post-inspector/ to verify that your image is valid -->
+
+        {# <meta name="image" property="og:image" content="{{ asset('assets/images/socialShare/linkedinShare.png') }}">  #}
+
+        <!-- Facebook - you can use 1200px by 630px picture -->
+
+        {# <meta property="og:title" content="Symfony 5 User Starter Pack" />
+        <meta property="og:url" content="https://starterpack.simschab.fr/" />
+        <meta property="og:image" content="{{ asset('assets/images/socialShare/facebookShare.png') }}" />
+        <meta property="og:description" content="Symfony 5 App ready to go with User all must have features" />
+        <meta property="og:site_name" content="SymfonyApp" /> #}
+
+
+        <!-- Twitter 'card' is set on summary_large_image - you can use aspect ratio of 2:1 between 300x157 and 4096x4096 pixels 5M size max 
+             use the tool https://cards-dev.twitter.com/validator to verify that your image is valid -->
+
+        {# <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@SimsChab" />
+        <meta name="twitter:creator" content="@SimsChab"/>
+        <meta name="twitter:title" content="Skeleton Starter" />
+        <meta name="twitter:description" content="Symfony 5 personnalized Skeleton" />
+        <meta name="twitter:image:src" content="{{ asset('assets/images/socialShare/twitterShare.png') }}" />  #}
+  
+        
+        <!-- Bootstrap CSS & Js -->
+
+        {# <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> #}
+        {# <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script> #}
+        
+        <!-- Boostrap for burgers, sliders... -->
+
+        {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script> #}
+        {# <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer></script>  #}
+        {# <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer></script>    #}
+        
+        <!-- Bootstrap icons -->
+        {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"> #}
+        
+        <!-- Fontawesome icons CDN -->
+        {# <script src="https://kit.fontawesome.com/115544430d.js" crossorigin="anonymous" defer></script> #}
+
+        <!-- This App custom CSS -->
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/css/reset.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+        {% endblock %}
+
+        <!-- In this App, Google Font are in assets/fonts/poppins for better Google friendly performances 
+        use this tool if you need to download and add Google Font locally https://google-webfonts-helper.herokuapp.com/fonts -->
+        
+        <!-- Add here google font if needed -->
+        {# <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap" rel="stylesheet"> #}
+       
+        <!-- Add this App Js -->
+        <script src="{{ asset('assets/js/app.js') }}" defer></script>
+        
+        <title>{% block title %}Symfony Skeleton App{% endblock %}</title>    
+</head>
+    <body>
+        {% include '_fragments/_header.html.twig' %}
+        {% block body %} 
+        {% endblock %}
+        {% include '_fragments/_footer.html.twig' %}
+    </body>
+</html>

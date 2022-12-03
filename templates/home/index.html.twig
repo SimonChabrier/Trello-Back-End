@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block title %}Home Page!{% endblock %}
+
+{% block body %}
+<div class= "pageContent">
+{% for message in app.flashes('mailValidation_success') %} {{ message }} {% endfor %}
+
+    <h1>H1 Title</h1>  
+    <h2>H2 Title</h2>  
+    <h3>H3 Title</h3>
+    <p>Paragraph</p>
+
+{% if app.user %}
+    <p> User connecté : {{ app.user.email }}</p>
+    <button type="button" class="logButton"><a href="{{ path('app_logout') }}">LogOut</a></button>
+{% endif %}
+    <button type="button" class="logButton"><a href="{{ path('app_login') }}">LogIn</a></button>
+    <button type="button" class="logButton"><a href="{{ path('app_register') }}">Resister</a></button>
+</div>
+{% endblock %}

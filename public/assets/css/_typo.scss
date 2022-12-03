@@ -1,0 +1,36 @@
+h1 {
+    font-size: 1.8rem;
+    margin-bottom:  $gutter-small;
+    color: $darkBlack;
+};
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom:  $gutter-small;
+    color: $mediumBlack;
+   
+};
+
+h3 {
+    font-size: 1.2rem;
+    margin-bottom:  $gutter-small;
+    color: $lightBlack;
+
+};
+
+a {
+    color: $lightWhite;
+    text-transform: uppercase;
+
+    &:hover {
+        color: $lightWhite;
+        transition: all 1s;
+    }
+}
+
+p {
+    font-size: .9rem;
+    margin-bottom:  $gutter-small;
+    color: $darkBlack;
+};
+

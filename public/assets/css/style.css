@@ -1,0 +1,128 @@
+/*-------------------------------------------------------------------------------------*/
+/*  vars															   
+/*-------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------*/
+/*  Body															   
+/*-------------------------------------------------------------------------------------*/
+body {
+  font-family: "Poppins";
+  background: #a8dadc;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Fonts															   
+/*-------------------------------------------------------------------------------------*/
+/* poppins-200 - latin */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 200;
+  src: url("../fonts/poppins/poppins-v19-latin-200.eot"); /* IE9 Compat Modes */
+  src: local(""), url("../fonts/poppins/poppins-v19-latin-200.eot?#iefix") format("embedded-opentype"), url("../fonts/poppins/poppins-v19-latin-200.woff2") format("woff2"), url("../fonts/poppins/poppins-v19-latin-200.woff") format("woff"), url("../fonts/poppins/poppins-v19-latin-200.ttf") format("truetype"), url("../fonts/poppins/poppins-v19-latin-200.svg#Poppins") format("svg"); /* Legacy iOS */
+}
+/* poppins-regular - latin */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/poppins/poppins-v19-latin-regular.eot"); /* IE9 Compat Modes */
+  src: local(""), url("../fonts/poppins/poppins-v19-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/poppins/poppins-v19-latin-regular.woff2") format("woff2"), url("../fonts/poppins/poppins-v19-latin-regular.woff") format("woff"), url("../fonts/poppins/poppins-v19-latin-regular.ttf") format("truetype"), url("../fonts/poppins/poppins-v19-latin-regular.svg#Poppins") format("svg"); /* Legacy iOS */
+}
+/* poppins-600 - latin */
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/poppins/poppins-v19-latin-600.eot"); /* IE9 Compat Modes */
+  src: local(""), url("../fonts/poppins/poppins-v19-latin-600.eot?#iefix") format("embedded-opentype"), url("../fonts/poppins/poppins-v19-latin-600.woff2") format("woff2"), url("../fonts/poppins/poppins-v19-latin-600.woff") format("woff"), url("../fonts/poppins/poppins-v19-latin-600.ttf") format("truetype"), url("../fonts/poppins/poppins-v19-latin-600.svg#Poppins") format("svg"); /* Legacy iOS */
+}
+/*-------------------------------------------------------------------------------------*/
+/*  Type															   
+/*-------------------------------------------------------------------------------------*/
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #212529;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #343A40;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+a {
+  color: #F8F9FA;
+  text-transform: uppercase;
+}
+a:hover {
+  color: #F8F9FA;
+  transition: all 1s;
+}
+
+p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #212529;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Home															   
+/*-------------------------------------------------------------------------------------*/
+.pageContent {
+  background-color: #F8F9FA;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.logButton {
+  border: none;
+  background-color: #457B9D;
+  border-radius: 0.2rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+.logButton:hover {
+  background-color: #1d3557;
+  transition: all 2s;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Home															   
+/*-------------------------------------------------------------------------------------*/
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.loginForm--content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/*-------------------------------------------------------------------------------------*/
+/*  Home															   
+/*-------------------------------------------------------------------------------------*/
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.registerForm--content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+.registerForm--label {
+  margin-left: 0.5rem;
+}/*# sourceMappingURL=style.css.map */

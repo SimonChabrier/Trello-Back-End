@@ -1,0 +1,19 @@
+.pageContent {
+    background-color: $lightWhite;
+    padding:$gutter-medium;
+    margin: $gutter-small;    
+};
+
+.logButton {
+    border: none;
+    background-color: $mediumBlue;
+    border-radius: $gutter-Xsmall;
+    margin-top: $gutter-small;
+    padding: $gutter-small;
+
+
+    &:hover {
+        background-color: $darkBlue;
+        transition: all 2s;
+    }
+};
