@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -64,6 +66,22 @@ class Task
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $task_column;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +192,56 @@ class Task
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getTaskColumn(): ?Column
+    {
+        return $this->task_column;
+    }
+
+    public function setTaskColumn(?Column $task_column): self
+    {
+        $this->task_column = $task_column;
+
+        return $this;
+    }
+
+    /**
+     * Retourne les utilisateurs assignés à la tâche
+     * 
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    /**
+     * Ajoute un utilisateur à la tâche
+     * 
+     * @param User $user
+     * @return self
+     */
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Supprime un utilisateur associé à la tâche
+     * 
+     * @param User $user
+     * @return self
+     */
+    public function removeUser(User $user): self
+    {
+        $this->users->removeElement($user);
 
         return $this;
     }
