@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
             '150',
             '200',
         ];
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $task = new Task();
             $task->setTaskTitle($faker->sentence(3));
             $task->setTaskContent($faker->paragraph(3));

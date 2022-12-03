@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+// API
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
@@ -17,41 +19,49 @@ class Task
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"task_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"task_read"})
      */
     private $task_title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"task_read"})
      */
     private $task_content;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"task_read"})
      */
     private $task_done = false;
 
     /**
      * @ORM\Column(type="string", length=2)
+     * @Groups({"task_read"})
      */
     private $column_number;
 
     /**
      * @ORM\Column(type="string", length=4)
+     * @Groups({"task_read"})
      */
     private $card_number;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"task_read"})
      */
     private $card_color;
 
     /**
      * @ORM\Column(type="string", length=4, nullable=true)
+     * @Groups({"task_read"})
      */
     private $textarea_height;
 
@@ -70,11 +80,13 @@ class Task
     /**
      * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
+     * 
      */
     private $task_column;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
+     * @Groups({"task_read"})
      */
     private $users;
 

@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\ColumnRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+// API
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ColumnRepository::class)
@@ -23,11 +26,13 @@ class Column
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
+     * @Groups({"task_read"})
      */
     private $column_name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task_read"})
      */
     private $column_number;
 
@@ -45,6 +50,7 @@ class Column
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_column", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Groups({"task_read"})
      */
     private $tasks;
 
