@@ -17,6 +17,8 @@ Use it to start a project with a skeleton project.
 - Mailer
 - Assets
 - Twig Bundle
+- Nelmio Cors Bundle
+- Symfony Serializer Pack
 
 ## Available feature
 

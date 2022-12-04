@@ -1,5 +1,8 @@
 doctrine:
     dbal:
+        # ajouter ça pour la config mamp
+        unix_socket: /Applications/MAMP/tmp/mysql/mysql.sock
+        # garder juste ça en prod
         url: '%env(resolve:DATABASE_URL)%'
 
         # IMPORTANT: You MUST configure your server version,

@@ -1,1 +1,7 @@
-<div class="header pageContent">Header</div>
+<div class="header pageContent">
+{% if app.user %}
+    <p> User connecté : {{ app.user.email }}</p>
+    <button type="button" class="logButton"><a href="{{ path('app_logout') }}">LogOut</a></button>
+{% endif %}
+    <button type="button" class="logButton"><a href="{{ path('app_login') }}">LogIn</a></button>
+    <button type="button" class="logButton"><a href="{{ path('app_register') }}">Resister</a></button></div>

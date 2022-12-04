@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+
+//API
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -20,11 +25,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"task_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"task_read"})
      */
     private $email;
 
@@ -46,6 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     * @Groups({"task_read"})
      */
     private $username;
 
@@ -71,6 +79,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="datetime_immutable")
      */
     private $updateAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users", cascade={"persist", "remove"})
+     */
+    private $tasks;
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -224,6 +242,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdateAt(\DateTimeImmutable $updateAt): self
     {
         $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Task>
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * Ajoute une tâche à l'utilisateur
+     * 
+     * @param Task $task
+     * @return self
+     */
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->addUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Supprime une tâche assignée à l'utilisateur
+     * 
+     * @param Task $task
+     * @return self
+     */
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->removeElement($task)) {
+            $task->removeUser($this);
+        }
 
         return $this;
     }
