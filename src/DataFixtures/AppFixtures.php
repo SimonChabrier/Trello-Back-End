@@ -65,13 +65,15 @@ class AppFixtures extends Fixture
         $colors = [ 'card--color--orange', 'card--color--blue', 'card--color--red', 'card--color--default'];
         $text_area = [ '100', '150', '200'];
 
-        for ($i = 0; $i < 25; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $task = new Task();
             $task->setTaskTitle($faker->sentence(3));
             $task->setTaskContent($faker->paragraph(3));
-
             $task->setColumnNumber($faker->numberBetween(1, 4));
-            $task->setCardNumber($i);
+            
+             //TODO gérer les numéros de cate par colonne
+            $task->setCardNumber($faker->numberBetween(1, 4));
+            
             $task->setCardColor($colors[mt_rand(0, 3)]);
             $task->setTextareaHeight($text_area[mt_rand(0, 2)]);
             $taskStatus = ['false', 'true'];
