@@ -85,7 +85,7 @@ class Task
     private $task_column;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks", cascade={"all"})
      * @Groups({"task_read", "task_write"})
      */
     private $users;

@@ -80,7 +80,7 @@ class ApiController extends AbstractController
     ): Response
     {   
         $data = $request->getContent();
-        $serializer->deserialize($data, Column::class, 'json', ['object_to_populate' => $column]);
+        $serializer->deserialize($data, Column::class, 'json');
         $errors = $validator->validate($column);
 
         if (count($errors) > 0) {
