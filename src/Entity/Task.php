@@ -60,7 +60,7 @@ class Task
     private $card_color;
 
     /**
-     * @ORM\Column(type="string", length=4, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      * @Groups({"task_read", "task_write"})
      */
     private $textarea_height;
@@ -78,9 +78,9 @@ class Task
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"task_write"})
+     * @Groups({"task_write, task_read"})
      */
     private $task_column;
 

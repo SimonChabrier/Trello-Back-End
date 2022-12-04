@@ -29,7 +29,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de poster une nouvelle colonne sans audune carte de tâche associée
-     * @Route("/api/tasks", name="api_post_tasks", methods={"POST"})
+     * @Route("/api/column", name="api_post_column", methods={"POST"})
      */
     public function apiPostColumn(
         EntityManagerInterface $doctrine,
@@ -69,7 +69,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de modifier une colonne et ses cartes de tâches associées
-     * @Route("/api/column/{id}", name="api_put_tasks", methods={"PUT"})
+     * @Route("/api/column/{id}", name="api_put_tasks", methods={"PATCH"})
      */
     public function apiPutColumn(
         Column $column,
@@ -124,7 +124,6 @@ class ApiController extends AbstractController
      * @Route("/api/column/{id}/task", name="api_post_task", methods={"POST"})
      * 
      */
-    // TODO a debugger car ne fonctionne pas
     public function apiPostTask(
         EntityManagerInterface $doctrine,
         Request $request,
@@ -162,7 +161,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de modifier une carte de tâche
-     * @Route("/api/task/{id}", name="api_put_task", methods={"PUT"})
+     * @Route("/api/task/{id}", name="api_put_task", methods={"PATCH"})
      */
     public function apiPutTask(
         Task $task,

@@ -84,8 +84,6 @@ class AppFixtures extends Fixture
                 $task->addUser($users[mt_rand(0, 9)]);
             }
             
-
-
             for ($k = 0; $k < 3; $k++) {
                 $task->setTaskColumn($columns[mt_rand(0, 3)]);
             }

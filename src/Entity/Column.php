@@ -50,7 +50,7 @@ class Column
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_column", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_column", orphanRemoval=true, cascade={"persist"})
      * @Groups({"task_read"})
      * @ORM\OrderBy({"card_number" = "ASC"})
      */
