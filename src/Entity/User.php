@@ -26,11 +26,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"task_read"})
+     * @Groups({"task_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"task_read"})
      */
     private $email;
 
@@ -80,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $updateAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users", cascade={"persist", "remove"})
      */
     private $tasks;
 

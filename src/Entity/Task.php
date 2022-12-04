@@ -19,49 +19,49 @@ class Task
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $task_title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $task_content;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $task_done = false;
 
     /**
      * @ORM\Column(type="string", length=2)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $column_number;
 
     /**
      * @ORM\Column(type="string", length=4)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $card_number;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $card_color;
 
     /**
      * @ORM\Column(type="string", length=4, nullable=true)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $textarea_height;
 
@@ -85,8 +85,8 @@ class Task
     private $task_column;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
-     * @Groups({"task_read"})
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks", cascade={"persist"})
+     * @Groups({"task_read", "task_write"})
      */
     private $users;
 

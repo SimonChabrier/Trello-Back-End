@@ -21,18 +21,19 @@ class Column
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"task_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $column_name;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $column_number;
 
@@ -50,7 +51,7 @@ class Column
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_column", orphanRemoval=true, cascade={"persist", "remove"})
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $tasks;
 
