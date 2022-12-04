@@ -43,7 +43,8 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setUsername($faker->userName);
             $user->setEmail('user' . $i . '@user.fr');
-            $user->setPassword('password');
+            $user->setPassword(password_hash('password', PASSWORD_BCRYPT));
+            $user->setRoles(['ROLE_USER']);
 
             $users[] = $user;
 
