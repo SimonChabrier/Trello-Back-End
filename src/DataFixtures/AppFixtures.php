@@ -51,7 +51,7 @@ class AppFixtures extends Fixture
         };
 
         $columns = [];
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $column = new Column();
             $column->setColumnName('column ' . $i);
             $column->setColumnNumber($i);
@@ -65,22 +65,34 @@ class AppFixtures extends Fixture
         $colors = [ 'card--color--orange', 'card--color--blue', 'card--color--red', 'card--color--default'];
         $text_area = [ '100', '150', '200'];
 
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 25; $i++) {
             $task = new Task();
             $task->setTaskTitle($faker->sentence(3));
             $task->setTaskContent($faker->paragraph(3));
-            $task->setColumnNumber(mt_rand(1, 5));
-            $task->setCardNumber('1');
+
+            $task->setColumnNumber($faker->numberBetween(1, 4));
+            $task->setCardNumber($i);
             $task->setCardColor($colors[mt_rand(0, 3)]);
             $task->setTextareaHeight($text_area[mt_rand(0, 2)]);
             $taskStatus = ['false', 'true'];
             $task->setTaskDone(array_rand($taskStatus , 1));
+            
             for ($j = 0; $j < 3; $j++) {
                 $task->addUser($users[mt_rand(0, 9)]);
             }
-            $task->setTaskColumn($columns[mt_rand(0, 4)]);
+            
 
-            //$tasks[] = $task;
+
+            for ($k = 0; $k < 3; $k++) {
+                $task->setTaskColumn($columns[mt_rand(0, 3)]);
+            }
+
+            $tasks[] = $task;
+
+            foreach ($tasks as $task) {
+                $colNumber = $task->getColumnNumber();
+                $task->setTaskColumn($columns[$colNumber - 1]);
+            }
 
             $manager->persist($task);
         };
