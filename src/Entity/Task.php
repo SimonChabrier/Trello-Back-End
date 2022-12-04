@@ -78,9 +78,9 @@ class Task
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks")
+     * @ORM\ManyToOne(targetEntity=Column::class, inversedBy="tasks", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
-     * 
+     * @Groups({"task_write"})
      */
     private $task_column;
 

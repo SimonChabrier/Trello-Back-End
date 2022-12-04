@@ -21,7 +21,7 @@ class Column
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "task_write"})
      */
     private $id;
 
@@ -51,7 +51,7 @@ class Column
 
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="task_column", orphanRemoval=true, cascade={"persist", "remove"})
-     * @Groups({"task_read", "task_write"})
+     * @Groups({"task_read"})
      */
     private $tasks;
 
