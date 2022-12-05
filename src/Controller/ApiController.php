@@ -7,6 +7,7 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Column;
 use App\Repository\ColumnRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,6 +28,14 @@ class ApiController extends AbstractController
         return $this->json($columnRepository->findAll(), 200, [], ['groups' => 'task_read']);
     }
 
+    /**
+     * Retourne la dernière tâche modifiée
+     * @Route("/api/tasks/last", name="api_post_tasks", methods={"GET"})
+     */
+    public function apiGetLastTask(TaskRepository $taskRepository): Response
+    {
+        return $this->json($taskRepository->getLastUpdatedTask(), 200, [], ['groups' => 'task_read']);
+    }
     /**
      * Permet de poster une nouvelle colonne sans audune carte de tâche associée
      * @Route("/api/column", name="api_post_column", methods={"POST"})
