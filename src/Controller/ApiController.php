@@ -161,9 +161,10 @@ class ApiController extends AbstractController
 
     /**
      * Permet de modifier une carte de tâche
-     * @Route("/api/task/{id}", name="api_put_task", methods={"PATCH"})
+     * @Route("/api/{column}/task/{id}", name="api_put_task", methods={"PATCH"})
      */
     public function apiPutTask(
+        Column $column,
         Task $task,
         EntityManagerInterface $doctrine,
         Request $request,
@@ -172,8 +173,13 @@ class ApiController extends AbstractController
     ): Response
     {   
         $data = $request->getContent();
-        $serializer->deserialize($data, Task::class, 'json');
+        $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
+    
         $errors = $validator->validate($task);
+
+        // Mise à jour de l'Id de la colonne pour la carte de tâche
+        $task = $doctrine->getRepository(Task::class)->find($task->getId());
+        $task->setTaskColumn($column);
 
         if (count($errors) > 0) {
             // les messages d'erreurs sont à définir dans les asserts de l'entité Column
