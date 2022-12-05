@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
         $colors = [ 'card--color--orange', 'card--color--blue', 'card--color--red', 'card--color--default'];
         $text_area = [ '100', '150', '200'];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $task = new Task();
             $task->setTaskTitle($faker->sentence(3));
             $task->setTaskContent($faker->paragraph(3));
