@@ -29,13 +29,111 @@ class ApiController extends AbstractController
     }
 
     /**
-     * Retourne la dernière tâche modifiée
+     * Retourne la dernière tâche mise à jour (pour la mise à jour du client)
      * @Route("/api/tasks/last", name="api_post_tasks", methods={"GET"})
      */
     public function apiGetLastTask(TaskRepository $taskRepository): Response
     {
         return $this->json($taskRepository->getLastUpdatedTask(), 200, [], ['groups' => 'task_read']);
     }
+
+    /**
+     * Permet de poster une nouvelle carte de tâche
+     * @Route("/api/column/{id}/task", name="api_post_task", methods={"POST"})
+     * 
+     */
+    public function apiPostTask(
+        EntityManagerInterface $doctrine,
+        Request $request,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator,
+        Column $column
+    ): Response
+    {   
+        $data = $request->getContent();
+        // je récupère dans l'URL l'id de la colonne pour lui associer la nouvelle tâche
+        $column = $doctrine->getRepository(Column::class)->find($column->getId());
+        $task = $serializer->deserialize($data, Task::class, 'json');
+        $task->setTaskColumn($column);
+
+
+        $errors = $validator->validate($task);
+
+        if (count($errors) > 0) {
+            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
+            // Ex: @Assert\NotBlank(message = "Mon message")
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $doctrine->persist($task);
+        $doctrine->flush();
+
+        return $this->json(
+            $task,
+            Response::HTTP_CREATED,
+            [],
+            ['groups' => ['task_read']]
+        );
+    }
+
+    /**
+     * Permet de mettre à jour une carte de tâche sans modifier tout l'objet
+     * @Route("/api/{column}/task/{id}", name="api_put_task", methods={"PATCH"})
+     */
+    public function apiPatchTask(
+        Column $column,
+        Task $task,
+        EntityManagerInterface $doctrine,
+        Request $request,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+    ): Response
+    {   
+        $data = $request->getContent();
+        $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
+    
+        $errors = $validator->validate($task);
+
+        // Mise à jour de l'Id de la colonne pour la carte de tâche
+        $task = $doctrine->getRepository(Task::class)->find($task->getId());
+        $task->setTaskColumn($column);
+
+        if (count($errors) > 0) {
+            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
+            // Ex: @Assert\NotBlank(message = "Mon message")
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $doctrine->persist($task);
+        $doctrine->flush();
+
+        return $this->json(
+            $task,
+            Response::HTTP_OK,
+            [],
+            ['groups' => ['task_read']]
+        );
+    }
+
+    /**
+     * Permet de supprimer une carte de tâche
+     * @Route("/api/task/{id}", name="api_delete_task", methods={"DELETE"})
+     */
+    public function apiDeleteTask(Task $task, EntityManagerInterface $doctrine): Response
+    {   
+        $doctrine->remove($task);
+        $doctrine->flush();
+
+        return $this->json(
+            $task,
+            Response::HTTP_OK,
+            [],
+            ['groups' => ['task_read']]
+        );
+    }
+
     /**
      * Permet de poster une nouvelle colonne sans audune carte de tâche associée
      * @Route("/api/column", name="api_post_column", methods={"POST"})
@@ -128,101 +226,6 @@ class ApiController extends AbstractController
         );
     }
 
-    /**
-     * Permet de poster une nouvelle carte de tâche
-     * @Route("/api/column/{id}/task", name="api_post_task", methods={"POST"})
-     * 
-     */
-    public function apiPostTask(
-        EntityManagerInterface $doctrine,
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator,
-        Column $column
-    ): Response
-    {   
-        $data = $request->getContent();
-        // je récupère dans l'URL l'id de la colonne pour lui associer la nouvelle tâche
-        $column = $doctrine->getRepository(Column::class)->find($column->getId());
-        $task = $serializer->deserialize($data, Task::class, 'json');
-        $task->setTaskColumn($column);
 
-
-        $errors = $validator->validate($task);
-
-        if (count($errors) > 0) {
-            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
-            // Ex: @Assert\NotBlank(message = "Mon message")
-            $errorsString = (string) $errors;
-            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $doctrine->persist($task);
-        $doctrine->flush();
-
-        return $this->json(
-            $task,
-            Response::HTTP_CREATED,
-            [],
-            ['groups' => ['task_read']]
-        );
-    }
-
-    /**
-     * Permet de modifier une carte de tâche
-     * @Route("/api/{column}/task/{id}", name="api_put_task", methods={"PATCH"})
-     */
-    public function apiPutTask(
-        Column $column,
-        Task $task,
-        EntityManagerInterface $doctrine,
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): Response
-    {   
-        $data = $request->getContent();
-        $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
-    
-        $errors = $validator->validate($task);
-
-        // Mise à jour de l'Id de la colonne pour la carte de tâche
-        $task = $doctrine->getRepository(Task::class)->find($task->getId());
-        $task->setTaskColumn($column);
-
-        if (count($errors) > 0) {
-            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
-            // Ex: @Assert\NotBlank(message = "Mon message")
-            $errorsString = (string) $errors;
-            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        $doctrine->persist($task);
-        $doctrine->flush();
-
-        return $this->json(
-            $task,
-            Response::HTTP_OK,
-            [],
-            ['groups' => ['task_read']]
-        );
-    }
-
-    /**
-     * Permet de supprimer une carte de tâche
-     * @Route("/api/task/{id}", name="api_delete_task", methods={"DELETE"})
-     */
-    public function apiDeleteTask(Task $task, EntityManagerInterface $doctrine): Response
-    {   
-        $doctrine->remove($task);
-        $doctrine->flush();
-
-        return $this->json(
-            $task,
-            Response::HTTP_OK,
-            [],
-            ['groups' => ['task_read']]
-        );
-    }
 
 }
