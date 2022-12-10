@@ -160,12 +160,6 @@ class ApiController extends AbstractController
         $doctrine->persist($task);
         $doctrine->flush();
 
-        // return $this->json(
-        //     $task, 
-        //     201, 
-        //     [], 
-        //     ['groups' => 'task_read']);
-
         return $this->json(
             $task,
             Response::HTTP_CREATED,
