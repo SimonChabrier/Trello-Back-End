@@ -100,6 +100,7 @@ class ApiController extends AbstractController
     ): Response
     {   
         $data = $request->getContent();
+        
         $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
     
         $errors = $validator->validate($task);
