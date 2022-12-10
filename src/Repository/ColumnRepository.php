@@ -42,7 +42,7 @@ class ColumnRepository extends ServiceEntityRepository
     public function getLastUpdatedColumn(): Column
     {
         return $this->createQueryBuilder('c')
-            ->orderBy('c.updatedAt', 'DESC')
+            ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

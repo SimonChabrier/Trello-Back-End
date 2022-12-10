@@ -30,7 +30,7 @@ class ApiController extends AbstractController
 
     /**
      * Retourne la dernière tâche mise à jour (pour la mise à jour du client)
-     * @Route("/api/tasks/last", name="api_post_tasks", methods={"GET"})
+     * @Route("/api/tasks/backlog", name="api_last_task", methods={"GET"})
      */
     public function apiGetLastTask(TaskRepository $taskRepository): Response
     {
@@ -38,8 +38,17 @@ class ApiController extends AbstractController
     }
 
     /**
+     * Retourne la dernière colonne mise à jour (pour la mise à jour du client)
+     * @Route("/api/columns/last", name="api_last_column", methods={"GET"})
+     */
+    // public function apiGetLastColumn(ColumnRepository $columnRepository): Response
+    // {
+    //     return $this->json($columnRepository->getLastUpdatedColumn(), 200, [], ['groups' => 'task_read']);
+    // }
+
+    /**
      * Permet de poster une nouvelle carte de tâche
-     * @Route("/api/column/{id}/task", name="api_post_task", methods={"POST"})
+     * @Route("/api/column/{id}", name="api_post_task", methods={"POST"})
      * 
      */
     public function apiPostTask(
@@ -79,7 +88,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de mettre à jour une carte de tâche sans modifier tout l'objet
-     * @Route("/api/{column}/task/{id}", name="api_put_task", methods={"PATCH"})
+     * @Route("/api/{column}/task/{id}", name="api_patch_task", methods={"PATCH"})
      */
     public function apiPatchTask(
         Column $column,
@@ -135,7 +144,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * Permet de poster une nouvelle colonne sans audune carte de tâche associée
+     * Permet de poster une nouvelle colonne sans aucune carte de tâche associée
      * @Route("/api/column", name="api_post_column", methods={"POST"})
      */
     public function apiPostColumn(
@@ -170,9 +179,9 @@ class ApiController extends AbstractController
 
     /**
      * Permet de modifier une colonne et ses cartes de tâches associées
-     * @Route("/api/column/{id}", name="api_put_tasks", methods={"PATCH"})
+     * @Route("/api/column/{id}", name="api_patch_column", methods={"PATCH"})
      */
-    public function apiPutColumn(
+    public function apiPatchColumn(
         Column $column,
         EntityManagerInterface $doctrine,
         Request $request,
