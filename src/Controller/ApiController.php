@@ -188,7 +188,7 @@ class ApiController extends AbstractController
             $column,
             Response::HTTP_OK,
             [],
-            ['groups' => ['tasks_read']]
+            ['groups' => ['column_write']]
         );
     }
 
@@ -229,7 +229,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_OK,
             [],
-            ['groups' => ['tasks_read']]
+            ['groups' => ['task_write']]
         );
     }
 
@@ -248,7 +248,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_OK,
             [],
-            ['groups' => ['tasks_read']]
+            ['groups' => ['task_delete']]
         );
     }
 
@@ -266,7 +266,7 @@ class ApiController extends AbstractController
             $column,
             Response::HTTP_OK,
             [],
-            ['groups' => ['tasks_read']]
+            ['groups' => ['column_delete']]
         );
     }
 

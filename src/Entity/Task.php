@@ -19,7 +19,7 @@ class Task
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"tasks_read"})
+     * @Groups({"tasks_read", "task_delete"})
      */
     private $id;
 

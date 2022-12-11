@@ -21,13 +21,13 @@ class Column
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"tasks_read"})
+     * @Groups({"tasks_read", "column_delete"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
-     * @Groups({"tasks_read"})
+     * @Groups({"tasks_read", "column_write"})
      */
     private $column_name;
 
