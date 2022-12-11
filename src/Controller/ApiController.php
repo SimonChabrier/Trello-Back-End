@@ -114,11 +114,13 @@ class ApiController extends AbstractController
     ): Response
     {   
         $data = $request->getContent();
-        // je récupère dans l'URL l'id de la colonne pour lui associer la nouvelle tâche
+        // je récupère dans l'URL l'id de la colonne avec le param converter
         $column = $doctrine->getRepository(Column::class)->find($column->getId());
+        // je déserialize le json en objet Task
         $task = $serializer->deserialize($data, Task::class, 'json');
+        // je passe à l'objet Task l'id de la colonne sur sa propriété $task_column pour persister la relation en BDD sur la table task
+        // TODO voir sur je peux faire ça plus proprement !
         $task->setTaskColumn($column);
-
 
         $errors = $validator->validate($task);
 
