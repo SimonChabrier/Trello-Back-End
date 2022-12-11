@@ -39,7 +39,7 @@ class ColumnRepository extends ServiceEntityRepository
         }
     }
 
-    public function getLastUpdatedColumn(): Column
+    public function getLastCreatedColumn(): Column
     {
         return $this->createQueryBuilder('c')
             ->orderBy('c.createdAt', 'DESC')

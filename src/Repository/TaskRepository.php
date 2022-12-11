@@ -40,13 +40,13 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * Rtourne me dernier enregistremnt modifié par sa date de mise à jour
+     * Rtourne me dernier enregistrement modifié par sa date de mise à jour
      * @return Task
      */
-    public function getLastUpdatedTask(): Task
+    public function getLastCreatedTask(): Task
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.updatedAt', 'DESC')
+            ->orderBy('t.createdAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

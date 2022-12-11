@@ -32,12 +32,6 @@ class Column
     private $column_name;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"task_read", "task_write"})
-     */
-    private $column_number;
-
-    /**
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
@@ -74,18 +68,6 @@ class Column
     public function setColumnName(?string $column_name): self
     {
         $this->column_name = $column_name;
-
-        return $this;
-    }
-
-    public function getColumnNumber(): ?int
-    {
-        return $this->column_number;
-    }
-
-    public function setColumnNumber(int $column_number): self
-    {
-        $this->column_number = $column_number;
 
         return $this;
     }
