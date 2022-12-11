@@ -20,7 +20,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {   
 
+
     //////////////////////////////////////////////* GET 
+    //////* JSON RETOURNE : 
+            // {
+            // 	"id": 187,
+            // 	"column_name": "Nom de la colonne",
+            // 	"tasks": [
+            // 		{
+            // 			"id": 205,
+            // 			"task_title": "",
+            // 			"task_content": "",
+            // 			"task_done": false,
+            // 			"column_number": "2",
+            // 			"card_number": "1",
+            // 			"card_color": "card--color--red",
+            // 			"textarea_height": "150",
+            // 			"users": []
+            // 		}
+            // 	]
+            // }
 
     /**
      * Retourne l'ensemble des colonnes et l'ensemble des cartes de tâches associées
@@ -32,7 +51,7 @@ class ApiController extends AbstractController
             $columnRepository->findAll(),
             Response::HTTP_OK, 
             [], 
-            ['groups' => 'task_read']
+            ['groups' => 'tasks_read']
         );
     }
 
@@ -46,7 +65,7 @@ class ApiController extends AbstractController
             $taskRepository->getLastCreatedTask(), 
             Response::HTTP_OK,  
             [], 
-            ['groups' => 'task_read']
+            ['groups' => 'tasks_read']
         );
     }
 
@@ -60,7 +79,7 @@ class ApiController extends AbstractController
             $columnRepository->getLastCreatedColumn(), 
             Response::HTTP_OK, 
             [], 
-            ['groups' => 'task_read']
+            ['groups' => 'tasks_read']
         );
     }
 
@@ -96,7 +115,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_CREATED,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['tasks_read']]
         );
     }
 
@@ -108,22 +127,17 @@ class ApiController extends AbstractController
     public function apiPostNewTask(
         EntityManagerInterface $doctrine,
         Request $request,
+        Column $column,
         SerializerInterface $serializer,
-        ValidatorInterface $validator,
-        Column $column
+        ValidatorInterface $validator
     ): Response
     {   
         $data = $request->getContent();
-        // je récupère dans l'URL l'id de la colonne avec le param converter
-        $column = $doctrine->getRepository(Column::class)->find($column->getId());
-        // je déserialize le json en objet Task
         $task = $serializer->deserialize($data, Task::class, 'json');
-        // je passe à l'objet Task l'id de la colonne sur sa propriété $task_column pour persister la relation en BDD sur la table task
-        // TODO voir sur je peux faire ça plus proprement !
         $task->setTaskColumn($column);
 
-        $errors = $validator->validate($task);
 
+        $errors = $validator->validate($task);
         if (count($errors) > 0) {
             // les messages d'erreurs sont à définir dans les asserts de l'entité Column
             // Ex: @Assert\NotBlank(message = "Mon message")
@@ -138,7 +152,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_CREATED,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['task_write']]
         );
     }
 
@@ -174,7 +188,7 @@ class ApiController extends AbstractController
             $column,
             Response::HTTP_OK,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['tasks_read']]
         );
     }
 
@@ -215,7 +229,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_OK,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['tasks_read']]
         );
     }
 
@@ -234,7 +248,7 @@ class ApiController extends AbstractController
             $task,
             Response::HTTP_OK,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['tasks_read']]
         );
     }
 
@@ -252,7 +266,7 @@ class ApiController extends AbstractController
             $column,
             Response::HTTP_OK,
             [],
-            ['groups' => ['task_read']]
+            ['groups' => ['tasks_read']]
         );
     }
 
