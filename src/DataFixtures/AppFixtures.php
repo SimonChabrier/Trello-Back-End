@@ -21,14 +21,10 @@ class AppFixtures extends Fixture
 
     private function truncate ()
     {
-
         $this->connexion->executeQuery('SET foreign_key_checks = 0');
         $this->connexion->executeQuery('TRUNCATE TABLE `task`');
         $this->connexion->executeQuery('TRUNCATE TABLE `column`');
         $this->connexion->executeQuery('TRUNCATE TABLE `user`');
-
-
-
     }
 
     public function load(ObjectManager $manager): void
@@ -55,8 +51,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 4; $i++) {
             $column = new Column();
             $column->setColumnName('column ' . $i);
-            $column->setColumnNumber($i);
-
+            
             $columns[] = $column;
 
             $manager->persist($column);
