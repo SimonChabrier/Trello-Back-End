@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"task_read"})
+     * @Groups({"task_read", "user_write"})
      */
     private $email;
 
@@ -43,6 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user_write"})
      */
     private $password;
 
@@ -54,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=50, unique=true)
      * @Groups({"task_read"})
+     * @Groups({"user_write"})
      */
     private $username;
 

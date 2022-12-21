@@ -6,8 +6,8 @@ use Exception;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Column;
-use App\Repository\ColumnRepository;
 use App\Repository\TaskRepository;
+use App\Repository\ColumnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 
 class ApiController extends AbstractController
 {   
@@ -270,6 +271,50 @@ class ApiController extends AbstractController
         );
     }
 
+    // TODO il faut que je regarde comment faire sans paramètre dans la route
+    /**
+     * Permet de poster une nouvelle colonne sans aucune carte de tâche associée
+     * @Route("/api/register/{user}", name="api_user_register", methods={"POST"})
+     */
+    public function apiUserRegister(
+        EntityManagerInterface $doctrine,
+        Request $request,
+        User $user,
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+    ): Response
+    {   
+    
+        $data = $request->getContent();
+        $user = $serializer->deserialize($data, User::class, 'json');
+        $errors = $validator->validate($user);
+
+        // hash du mot de passe depuis la requête
+        $user->setPassword(
+            password_hash($user->getPassword(), PASSWORD_BCRYPT)
+        );
+
+        if (count($errors) > 0) {
+            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
+            // Ex: @Assert\NotBlank(message = "Mon message")
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $doctrine->persist($user);
+        $doctrine->flush();
+
+        return $this->json(
+            $user,
+            Response::HTTP_CREATED,
+            [],
+            ['groups' => ['user_write']]
+        );
+    }
+
 
 
 }
+
+
+
