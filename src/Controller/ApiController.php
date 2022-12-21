@@ -273,7 +273,7 @@ class ApiController extends AbstractController
 
     // TODO il faut que je regarde comment faire sans paramètre dans la route
     /**
-     * Permet d'enrgistrer un utilisateur
+     * Permet d'enregistrer un utilisateur
      * @Route("/api/register/{user}", name="api_user_register", methods={"POST"})
      */
     public function apiUserRegister(
