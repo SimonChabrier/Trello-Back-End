@@ -273,7 +273,7 @@ class ApiController extends AbstractController
 
     // TODO il faut que je regarde comment faire sans paramètre dans la route
     /**
-     * Permet de poster une nouvelle colonne sans aucune carte de tâche associée
+     * Permet d'enrgistrer un utilisateur
      * @Route("/api/register/{user}", name="api_user_register", methods={"POST"})
      */
     public function apiUserRegister(
@@ -286,6 +286,7 @@ class ApiController extends AbstractController
     {   
     
         $data = $request->getContent();
+        dump($data);
         $user = $serializer->deserialize($data, User::class, 'json');
         $errors = $validator->validate($user);
 
