@@ -274,19 +274,18 @@ class ApiController extends AbstractController
     // TODO il faut que je regarde comment faire sans paramètre dans la route
     /**
      * Permet d'enregistrer un utilisateur
-     * @Route("/api/register/{user}", name="api_user_register", methods={"POST"})
+     * @Route("/api/register", name="api_user_register", methods={"POST"})
      */
     public function apiUserRegister(
         EntityManagerInterface $doctrine,
         Request $request,
-        User $user,
+        //User $user,
         SerializerInterface $serializer,
         ValidatorInterface $validator
     ): Response
     {   
     
         $data = $request->getContent();
-        dump($data);
         $user = $serializer->deserialize($data, User::class, 'json');
         $errors = $validator->validate($user);
 
