@@ -317,38 +317,20 @@ class ApiController extends AbstractController
      * Permet de se connecter
      * @Route("/api/login", name="api_user_login", methods={"POST"})
      */
+    public function login(Request $request): Response
+    {   
+        // Format de donnée attendu
+        // {
+        //     "username": "user@usermail",
+        //     "password": "userpassword"
+        // }
 
-    public function apiUserLogin(
-        EntityManagerInterface $doctrine,
-        Request $request,
-        SerializerInterface $serializer,
-        ValidatorInterface $validator
-    ): Response
-    {
-        $data = $request->getContent();
-        $user = $serializer->deserialize($data, User::class, 'json');
-        $errors = $validator->validate($user);
+        $user = $this->getUser();
 
-        // login login 
-        $user = $doctrine->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
-        if (!$user) {
-            return new JsonResponse('Email inconnu', Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        // login password
-        if (!password_verify($user->getPassword(), $user->getPassword())) {
-            return new JsonResponse('Mot de passe incorrect', Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
-        return $this->json(
-            $user,
-            Response::HTTP_OK,
-            [],
-            ['groups' => ['user_write']]
-        );
-
-
-
+        return $this->json([
+            'username' => $user->getUserIdentifier(),
+            'roles' => $user->getRoles(),
+        ]);
     }
 
 
