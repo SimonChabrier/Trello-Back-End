@@ -7,7 +7,6 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Column;
 use App\Repository\TaskRepository;
-
 use App\Repository\ColumnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
