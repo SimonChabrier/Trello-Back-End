@@ -7,6 +7,7 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Column;
 use App\Repository\TaskRepository;
+
 use App\Repository\ColumnRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -25,6 +27,7 @@ class ApiController extends AbstractController
 
     /**
      * Retourne l'ensemble des colonnes et l'ensemble des cartes de tâches associées
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/tasks", name="api_get_data", methods={"GET"})
      */
     public function apiGet(ColumnRepository $columnRepository): Response
@@ -39,6 +42,7 @@ class ApiController extends AbstractController
 
     /**
      * Retourne la dernière tâche créee
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/tasks/last", name="api_last_task", methods={"GET"})
      */
     public function apiGetLastCreatedTask(TaskRepository $taskRepository): Response
@@ -53,6 +57,7 @@ class ApiController extends AbstractController
 
     /**
      * Retourne la dernière colonne créee
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/columns/last", name="api_last_column", methods={"GET"})
      */
     public function apiGetLastCreatedColumn(ColumnRepository $columnRepository): Response
@@ -69,6 +74,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de poster une nouvelle colonne sans aucune carte de tâche associée
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/column", name="api_post_column", methods={"POST"})
      */
     public function apiPostNewColumn(
@@ -103,6 +109,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de poster une nouvelle carte de tâche dans une colonne
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/tasks/{column}", name="api_post_task", methods={"POST"})
      * 
      */
@@ -142,6 +149,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de mettre à jour une colonne sans modifier tout l'objet
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/column/{column}", name="api_patch_column", methods={"PATCH"})
      */
     public function apiPatchColumn(
@@ -176,6 +184,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de mettre à jour une carte de tâche sans modifier tout l'objet
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/{column}/task/{task}", name="api_patch_task", methods={"PATCH"})
      */
     public function apiPatchTask(
@@ -219,6 +228,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de supprimer une carte de tâche
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/task/{task}", name="api_delete_task", methods={"DELETE"})
      */
     public function apiDeleteTask(Task $task, EntityManagerInterface $doctrine): Response
@@ -236,6 +246,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet de supprimer une colonne et ses cartes de tâches associées (cascade={"remove"} sur tasks dans l'entité Column)
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/column/{column}", name="api_delete_tasks", methods={"DELETE"})
      */
 
@@ -254,6 +265,7 @@ class ApiController extends AbstractController
 
     /**
      * Permet d'enregistrer un utilisateur
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/api/register", name="api_user_register", methods={"POST"})
      */
     public function apiUserRegister(
