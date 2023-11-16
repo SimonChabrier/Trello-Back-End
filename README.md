@@ -19,6 +19,7 @@ Use it to start a project with a skeleton project.
 - Twig Bundle
 - Nelmio Cors Bundle
 - Symfony Serializer Pack
+- Lexik JWT Authentication Bundle
 
 ## Available feature
 
@@ -32,4 +33,5 @@ Use it to start a project with a skeleton project.
 - CreatedAt UpdatedAt generate in User Entity by Stof Extensio Bundle
 - Slug generate in User Entity by Stof Extensio Bundle
 - Public directory content: pictures / css + reset.css -> scss ready (need Sass Compiler extension) / fonts -> Poppins / js / Favicon
+- JWT Token Authentication
 - <head> ready to personalize
