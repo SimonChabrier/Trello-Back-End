@@ -15,32 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ApiController extends AbstractController
 {   
-
-
-    //////////////////////////////////////////////* GET 
-    //////* JSON RETOURNE : 
-            // {
-            // 	"id": 187,
-            // 	"column_name": "Nom de la colonne",
-            // 	"tasks": [
-            // 		{
-            // 			"id": 205,
-            // 			"task_title": "",
-            // 			"task_content": "",
-            // 			"task_done": false,
-            // 			"column_number": "2",
-            // 			"card_number": "1",
-            // 			"card_color": "card--color--red",
-            // 			"textarea_height": "150",
-            // 			"users": []
-            // 		}
-            // 	]
-            // }
 
     /**
      * Retourne l'ensemble des colonnes et l'ensemble des cartes de tâches associées
@@ -271,7 +252,6 @@ class ApiController extends AbstractController
         );
     }
 
-    // TODO il faut que je regarde comment faire sans paramètre dans la route
     /**
      * Permet d'enregistrer un utilisateur
      * @Route("/api/register", name="api_user_register", methods={"POST"})
@@ -279,9 +259,11 @@ class ApiController extends AbstractController
     public function apiUserRegister(
         EntityManagerInterface $doctrine,
         Request $request,
-        //User $user,
         SerializerInterface $serializer,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        UserPasswordHasherInterface $hasher,
+        ParameterBagInterface $params,
+        EmailVerifier $emailVerifier
     ): Response
     {   
     
@@ -304,35 +286,24 @@ class ApiController extends AbstractController
         $doctrine->persist($user);
         $doctrine->flush();
 
+        $emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address($params->get('admin_email'), 'TrelloBackEnd'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+
+         //TODO : notifcation admin 
+
+
         return $this->json(
             $user,
             Response::HTTP_CREATED,
             [],
-            ['groups' => ['user_write']]
+            ['groups' => ['user_read']]
         );
     }
-
-    /**
-     * Permet de se connecter
-     * @Route("/api/login", name="api_user_login", methods={"POST"})
-     */
-    public function login(Request $request): Response
-    {   
-        // Format de donnée attendu
-        // {
-        //     "username": "user@usermail",
-        //     "password": "userpassword"
-        // }
-
-        $user = $this->getUser();
-
-        return $this->json([
-            'username' => $user->getUserIdentifier(),
-            'roles' => $user->getRoles(),
-        ]);
-    }
-
-
 
 }
 

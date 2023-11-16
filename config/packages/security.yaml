@@ -11,19 +11,39 @@ security:
                 class: App\Entity\User
                 property: email
     firewalls:
+
+        login: # the login firewall is used to authenticate users from login form
+                pattern: ^/auth # all routes starting with /auth will be handled here
+                stateless: true # no session will be created for these requests
+                json_login: # use json_login to signal that this is a json login request 
+                    check_path: /auth # the route that handles the login request 
+                    username_path: email # the property to query by - e.g. username, email, etc
+                    password_path: password # the property to query by - e.g. username, email, etc
+                    success_handler: lexik_jwt_authentication.handler.authentication_success # the handler that will deal with the successful authentication
+                    failure_handler: lexik_jwt_authentication.handler.authentication_failure # the handler that will deal with failed authentication
+        
+        api: # the api firewall is used to authenticate users from api requests
+            pattern:   ^/api # all routes starting with /api will be handled here
+            stateless: true # no session will be created for these requests
+            jwt: ~ # use jwt to signal that this is a jwt authentication request
+        
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        
         main:
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\UserLoginAuthenticator
-            json_login:
-                check_path: /api/login
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+            logout: # the logout configuration
+                path: app_logout # the route that handles the logout request
+                invalidate_session: true # invalidate the session on logout to clean up the session
+            login_throttling: # the login throttling configuration
+                max_attempts: 5 # the maximum number of attempts before blocking the user
+                interval: '30 minutes' # the interval to block the user after the maximum number of attempts
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -34,8 +54,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/api/(?!/register), roles: ROLE_SUPER_ADMIN }  # Restreindre l'accès à /api sauf /api/register aux utilisateurs avec ROLE_ADMIN
+        #- { path: ^/api, roles: ROLE_ADMIN }  # Restreindre l'accès à /api sauf aux utilisateurs avec ROLE_ADMIN
+        #- { path: ^/api/login, roles: PUBLIC_ACCESS }  # Autoriser l'accès à /api/login pour tout le monde
 
 when@test:
     security:
