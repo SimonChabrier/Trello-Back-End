@@ -7,16 +7,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EntityDataValidation
 {
-    private $validator;
+    private $validatorInterface;
 
-    public function __construct(ValidatorInterface $validator)
+    public function __construct(ValidatorInterface $validatorInterface)
     {
-        $this->validator = $validator;
+        $this->validatorInterface = $validatorInterface;
     }
 
     public function validateData($entity)
-    {
-        $errors = $this->validator->validate($entity);
+    {   
+        
+        $errors = $this->validatorInterface->validate($entity);
 
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
