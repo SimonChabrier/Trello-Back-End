@@ -92,12 +92,12 @@ class ApiController extends AbstractController
         $entityDataValidation->validateData($task);
         // $errors = $validator->validate($task);
 
-        // if (count($errors) > 0) {
-        //     // les messages d'erreurs sont à définir dans les asserts de l'entité Column
-        //     // Ex: @Assert\NotBlank(message = "Mon message")
-        //     $errorsString = (string) $errors;
-        //     return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
-        // }
+        if (count($errors) > 0) {
+            // les messages d'erreurs sont à définir dans les asserts de l'entité Column
+            // Ex: @Assert\NotBlank(message = "Mon message")
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
         $doctrine->persist($task);
         $doctrine->flush();
