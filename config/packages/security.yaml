@@ -36,11 +36,11 @@ security:
             provider: app_user_provider
             custom_authenticator: App\Security\UserLoginAuthenticator
             logout: # the logout configuration
-                path: app_logout # the route that handles the logout request
-                invalidate_session: true # invalidate the session on logout to clean up the session
-            login_throttling: # the login throttling configuration
-                max_attempts: 5 # the maximum number of attempts before blocking the user
-                interval: '30 minutes' # the interval to block the user after the maximum number of attempts
+                path: app_logout 
+                invalidate_session: true 
+            login_throttling: 
+                max_attempts: 5 
+                interval: '30 minutes' 
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
@@ -54,9 +54,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        #- { path: ^/api/(?!/register), roles: ROLE_SUPER_ADMIN }  # Restreindre l'accès à /api sauf /api/register aux utilisateurs avec ROLE_ADMIN
-        #- { path: ^/api, roles: ROLE_ADMIN }  # Restreindre l'accès à /api sauf aux utilisateurs avec ROLE_ADMIN
-        #- { path: ^/api/login, roles: PUBLIC_ACCESS }  # Autoriser l'accès à /api/login pour tout le monde
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
