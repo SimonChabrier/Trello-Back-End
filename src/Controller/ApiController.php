@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 //  
 /**
  * Route prefix and security for all routes in this controller
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("PUBLIC_ACCESS")
  * @Route("/api")
  */
 class ApiController extends AbstractController
