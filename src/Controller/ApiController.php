@@ -147,7 +147,7 @@ class ApiController extends AbstractController
     {   
         $data = $request->getContent();
         $serializer->deserialize($data, Column::class, 'json', ['object_to_populate' => $column]);
-        $entityDataValidation->validateData($column);
+        //$entityDataValidation->validateData($column);
         $doctrine->flush();
 
         return $this->json(
