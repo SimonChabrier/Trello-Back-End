@@ -7,7 +7,6 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Column;
 use App\Service\ConfirmAccount;
-use App\Service\EntityDataValidation;
 use App\Repository\TaskRepository;
 use App\Repository\ColumnRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -83,12 +82,16 @@ class ApiController extends AbstractController
         EntityManagerInterface $doctrine,
         Request $request,
         SerializerInterface $serializer,
-        EntityDataValidation $entityDataValidation
+        ValidatorInterface $validator
     ): Response
     {   
         $data = $request->getContent();
         $column = $serializer->deserialize($data, Column::class, 'json');
-        $entityDataValidation->validateData($column);
+        $errors = $validator->validate($column);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
         $doctrine->persist($column);
         $doctrine->flush();
 
@@ -109,13 +112,17 @@ class ApiController extends AbstractController
         Request $request,
         Column $column,
         SerializerInterface $serializer,
-        EntityDataValidation $entityDataValidation
+        ValidatorInterface $validator
     ): Response
     {   
         $data = $request->getContent();
         $task = $serializer->deserialize($data, Task::class, 'json');
         $task->setTaskColumn($column);
-        $entityDataValidation->validateData($task);
+        $errors = $validator->validate($task);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
         $doctrine->persist($task);
         $doctrine->flush();
 
@@ -138,12 +145,17 @@ class ApiController extends AbstractController
         EntityManagerInterface $doctrine,
         Request $request,
         SerializerInterface $serializer,
-        EntityDataValidation $entityDataValidation
+        ValidatorInterface $validator
     ): Response
     {   
         $data = $request->getContent();
         $serializer->deserialize($data, Column::class, 'json', ['object_to_populate' => $column]);
-        $entityDataValidation->validateData($column);
+        $errors = $validator->validate($column);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
         $doctrine->flush();
 
         return $this->json(
@@ -164,13 +176,19 @@ class ApiController extends AbstractController
         EntityManagerInterface $doctrine,
         Request $request,
         SerializerInterface $serializer,
-        EntityDataValidation $entityDataValidation
+        ValidatorInterface $validator
     ): Response
     {   
         $data = $request->getContent();    
         $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
         $task->setTaskColumn($column);
-        $entityDataValidation->validateData($task);
+
+        $errors = $validator->validate($task);
+        if (count($errors) > 0) {
+            $errorsString = (string) $errors;
+            return new JsonResponse($errorsString, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $doctrine->persist($task);
         $doctrine->flush();
 
