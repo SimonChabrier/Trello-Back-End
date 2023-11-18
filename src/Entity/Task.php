@@ -37,6 +37,10 @@ class Task
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Regex(
+     *     pattern="/^[\w\s]+$/",
+     *     message="Le nom de la colonne ne doit contenir que des lettres, des chiffres, des espaces ou des soulignés."
+     * )
      * @Groups({"tasks_read", "task_write"})
      */
     private $task_content;
