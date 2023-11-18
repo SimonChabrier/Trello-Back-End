@@ -86,11 +86,9 @@ class ApiController extends AbstractController
         EntityDataValidation $entityDataValidation
     ): Response
     {   
-    
         $data = $request->getContent();
         $column = $serializer->deserialize($data, Column::class, 'json');
         $entityDataValidation->validateData($column);
-        
         $doctrine->persist($column);
         $doctrine->flush();
 
@@ -117,12 +115,10 @@ class ApiController extends AbstractController
         $data = $request->getContent();
         $task = $serializer->deserialize($data, Task::class, 'json');
         $task->setTaskColumn($column);
-        // Data validation with asserts in the Task entity // Eg: @Assert\NotBlank(message = "My message")
         $entityDataValidation->validateData($task);
-    
         $doctrine->persist($task);
         $doctrine->flush();
-
+        
         return $this->json(
             $task,
             Response::HTTP_CREATED,

@@ -40,7 +40,7 @@ class TaskRepository extends ServiceEntityRepository
     }
 
     /**
-     * Rtourne me dernier enregistrement modifié par sa date de mise à jour
+     * Return the last updated record by its update date
      * @return Task
      */
     public function getLastCreatedTask(): Task
