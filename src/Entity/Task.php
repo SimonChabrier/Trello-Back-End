@@ -42,7 +42,7 @@ class Task
     private $task_done = false;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="integer", length=2)
      * @Groups({"tasks_read", "task_write"})
      */
     private $column_number;
