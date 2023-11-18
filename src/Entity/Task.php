@@ -48,7 +48,7 @@ class Task
     private $column_number;
 
     /**
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="integer", length=4)
      * @Groups({"tasks_read", "task_write"})
      */
     private $card_number;
