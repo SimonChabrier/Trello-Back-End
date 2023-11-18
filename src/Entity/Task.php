@@ -221,7 +221,7 @@ class Task
     }
 
     /**
-     * Retourne les utilisateurs assignés à la tâche
+     * Return the users associated to the task
      * 
      * @return Collection<int, User>
      */
@@ -231,7 +231,7 @@ class Task
     }
 
     /**
-     * Ajoute un utilisateur à la tâche
+     * Add a user associated to the task
      * 
      * @param User $user
      * @return self
@@ -246,7 +246,7 @@ class Task
     }
 
     /**
-     * Supprime un utilisateur associé à la tâche
+     * Remove a user associated to the task
      * 
      * @param User $user
      * @return self

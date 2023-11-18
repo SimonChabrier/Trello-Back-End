@@ -1,0 +1,38 @@
+@startuml diagramme requête back-end
+Client -> Frontend: Requête HTTP
+Frontend -> Kernel: Appel du Kernel (index.php)
+activate Kernel
+Kernel -> Firewall: Vérification CORS
+activate Firewall
+Firewall --> Firewall: success/error
+deactivate Firewall
+Kernel -> Firewall: Vérification JWT
+activate Firewall
+Firewall --> Firewall: success/error
+deactivate Firewall
+Kernel -> Firewall: Vérification ACL
+activate Firewall
+Firewall --> Firewall: success/error
+deactivate Firewall
+Kernel -> Controller: Appel du Controller
+activate Controller
+Controller -> Annotation: (véfication droits sur la route)
+activate Annotation
+Annotation --> Annotation : success/erreur
+Controller -> Entity: Utilisation de l'Entité (Model)
+activate Entity
+Entity -> ORM: Appel du Repository
+activate ORM
+ORM --> Database: Interaction avec la base de données
+activate Database
+Database --> ORM: Résultat de l'opération
+deactivate Database
+ORM --> Entity: Traitement des données ORM
+deactivate ORM
+Entity --> Controller: Rendu de l'Entité (Model)
+deactivate Entity
+Controller -> Kernel: Réponse JSON
+deactivate Controller
+Kernel -> Frontend: Réponse complète (headers + body)
+deactivate Kernel
+@enduml
