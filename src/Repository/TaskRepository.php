@@ -46,7 +46,7 @@ class TaskRepository extends ServiceEntityRepository
     public function getLastCreatedTask(): Task
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.createdAt', 'DESC')
+            ->orderBy('t.updatedAt', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

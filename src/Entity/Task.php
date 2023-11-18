@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 // API
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -107,7 +108,7 @@ class Task
 
     public function setTaskTitle(?string $task_title): self
     {
-        $this->task_title = $task_title;
+        $this->task_title = htmlspecialchars($task_title);
 
         return $this;
     }
@@ -119,7 +120,7 @@ class Task
 
     public function setTaskContent(?string $task_content): self
     {
-        $this->task_content = $task_content;
+        $this->task_content = htmlspecialchars($task_content);
 
         return $this;
     }
@@ -143,7 +144,7 @@ class Task
 
     public function setColumnNumber(string $column_number): self
     {
-        $this->column_number = $column_number;
+        $this->column_number = htmlspecialchars($column_number);
 
         return $this;
     }
@@ -155,7 +156,7 @@ class Task
 
     public function setCardNumber(string $card_number): self
     {
-        $this->card_number = $card_number;
+        $this->card_number = htmlspecialchars($card_number);
 
         return $this;
     }
@@ -167,7 +168,7 @@ class Task
 
     public function setCardColor(string $card_color): self
     {
-        $this->card_color = $card_color;
+        $this->card_color = htmlspecialchars($card_color);
 
         return $this;
     }
@@ -179,7 +180,7 @@ class Task
 
     public function setTextareaHeight(?string $textarea_height): self
     {
-        $this->textarea_height = $textarea_height;
+        $this->textarea_height = htmlspecialchars($textarea_height);
 
         return $this;
     }

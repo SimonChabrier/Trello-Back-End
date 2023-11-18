@@ -67,7 +67,7 @@ class Column
 
     public function setColumnName(?string $column_name): self
     {
-        $this->column_name = $column_name;
+        $this->column_name = htmlspecialchars($column_name);
 
         return $this;
     }

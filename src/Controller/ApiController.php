@@ -25,7 +25,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 //  
 /**
  * Route prefix and security for all routes in this controller
- * @IsGranted("PUBLIC_ACCESS")
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/api")
  */
 class ApiController extends AbstractController
@@ -118,7 +118,7 @@ class ApiController extends AbstractController
         $entityDataValidation->validateData($task);
         $doctrine->persist($task);
         $doctrine->flush();
-        
+
         return $this->json(
             $task,
             Response::HTTP_CREATED,
@@ -167,7 +167,7 @@ class ApiController extends AbstractController
         EntityDataValidation $entityDataValidation
     ): Response
     {   
-        $data = $request->getContent();
+        $data = $request->getContent();    
         $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
         $task->setTaskColumn($column);
         $entityDataValidation->validateData($task);
@@ -191,14 +191,12 @@ class ApiController extends AbstractController
     public function apiDeleteTask(Task $task, EntityManagerInterface $doctrine): Response
     {   
         $doctrine->remove($task);
-        $doctrine->flush();
-
         return $this->json(
             $task,
             Response::HTTP_OK,
             [],
-            ['groups' => ['task_delete']]
-        );
+            ['groups' => ['task_delete']
+        ]);
     }
 
     /**
@@ -208,7 +206,6 @@ class ApiController extends AbstractController
     public function apiDeleteColumn(Column $column, EntityManagerInterface $doctrine): Response
     {   
         $doctrine->remove($column);
-        $doctrine->flush();
 
         return $this->json(
             $column,
