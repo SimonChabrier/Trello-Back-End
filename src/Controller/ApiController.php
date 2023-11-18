@@ -22,11 +22,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-
+//  
 /**
  * Route prefix and security for all routes in this controller
+ * @IsGranted("ROLE_ADMIN")
  * @Route("/api")
- * @IsGranted("PUBLIC_ACCESS")
  */
 class ApiController extends AbstractController
 {   
