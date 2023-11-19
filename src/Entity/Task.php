@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
-// API
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -29,7 +27,7 @@ class Task
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
      *     pattern="/^[\w\s]+$/",
-     *     message="Le nom de la colonne ne doit contenir que des lettres, des chiffres, des espaces ou des soulignés."
+     *     message="Format de titre invalide."
      * )
      * @Groups({"tasks_read", "task_write"})
      */

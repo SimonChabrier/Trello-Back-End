@@ -182,7 +182,6 @@ class ApiController extends AbstractController
         $data = $request->getContent();    
         $serializer->deserialize($data, Task::class, 'json', ['object_to_populate' => $task]);
         $task->setTaskColumn($column);
-
         $errors = $validator->validate($task);
         if (count($errors) > 0) {
             $errorsString = (string) $errors;
