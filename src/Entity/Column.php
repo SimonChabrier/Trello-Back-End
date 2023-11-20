@@ -29,8 +29,8 @@ class Column
     /**
      * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Regex(
-     *     pattern="/^[\w\s]+$/",
-     *     message="Le nom de la colonne ne doit contenir que des lettres, des chiffres, des espaces ou des soulignés."
+     *     pattern="/^[^<>]*$/",
+     *     message="Le nom de la colonne ne doit pas contenir "<" ou ">"."
      * )
      * @Groups({"tasks_read", "column_write"})
      */

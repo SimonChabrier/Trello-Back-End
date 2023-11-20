@@ -26,8 +26,8 @@ class Task
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
-     *     pattern="/^[\w\s]+$/",
-     *     message="Format de titre invalide."
+     *     pattern="/^[^<>]*$/",
+     *     message="Le titre de la carte ne doit pas contenir "<" ou ">"."
      * )
      * @Groups({"tasks_read", "task_write"})
      */
@@ -36,8 +36,8 @@ class Task
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Regex(
-     *     pattern="/^[\w\s]+$/",
-     *     message="Le nom de la colonne ne doit contenir que des lettres, des chiffres, des espaces ou des soulignés."
+     *     pattern="/^[^<>]*$/",
+     *     message="Le nom de la carte ne doit pas contenir "<" ou ">"."
      * )
      * @Groups({"tasks_read", "task_write"})
      */
