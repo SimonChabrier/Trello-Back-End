@@ -27,7 +27,7 @@ class Task
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Regex(
      *     pattern="/^[^<>]*$/",
-     *     message="Le titre de la carte ne doit pas contenir "<" ou ">"."
+     *     message="Le titre de la carte n'est pas valide."
      * )
      * @Groups({"tasks_read", "task_write"})
      */
@@ -37,7 +37,7 @@ class Task
      * @ORM\Column(type="text", nullable=true)
      * @Assert\Regex(
      *     pattern="/^[^<>]*$/",
-     *     message="Le nom de la carte ne doit pas contenir "<" ou ">"."
+     *     message="Le nom de la carte n'est pas valide."
      * )
      * @Groups({"tasks_read", "task_write"})
      */

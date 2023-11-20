@@ -30,7 +30,7 @@ class Column
      * @ORM\Column(type="string", length=60, nullable=true)
      * @Assert\Regex(
      *     pattern="/^[^<>]*$/",
-     *     message="Le nom de la colonne ne doit pas contenir "<" ou ">"."
+     *     message="Le nom de la colonne n'est pas valide."
      * )
      * @Groups({"tasks_read", "column_write"})
      */
