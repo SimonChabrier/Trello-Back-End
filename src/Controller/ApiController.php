@@ -208,6 +208,7 @@ class ApiController extends AbstractController
     public function apiDeleteTask(Task $task, EntityManagerInterface $doctrine): Response
     {   
         $doctrine->remove($task);
+        $doctrine->flush();
         return $this->json(
             $task,
             Response::HTTP_OK,
@@ -223,7 +224,7 @@ class ApiController extends AbstractController
     public function apiDeleteColumn(Column $column, EntityManagerInterface $doctrine): Response
     {   
         $doctrine->remove($column);
-
+        $doctrine->flush();
         return $this->json(
             $column,
             Response::HTTP_OK,
