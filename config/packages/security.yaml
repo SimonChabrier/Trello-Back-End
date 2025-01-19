@@ -38,9 +38,9 @@ security:
             logout: # the logout configuration
                 path: app_logout 
                 invalidate_session: true 
-            login_throttling: 
-                max_attempts: 5 
-                interval: '30 minutes' 
+            #login_throttling: 
+               # max_attempts: 5 
+                #interval: '30 minutes' 
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds

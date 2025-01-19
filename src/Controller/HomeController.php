@@ -15,6 +15,10 @@ class HomeController extends AbstractController
     {   
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
+        } else {
+            return $this->json([
+                'message' => 'On est déjà connecté et il n\'y a rien à voir ici Mon TaskManager est une API',
+            ]);
         }
     }
 }
